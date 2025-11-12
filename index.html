@@ -548,6 +548,13 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
     margin: 40px 0 20px;
     cursor: default;
 }
+
+
+/* @media (max-width: 470px) {
+.the-end-sign {
+    font-size: 4.5em;
+}
+} */
 /* twine-user-stylesheet #9: "system_links.css" */
 /* — Block: link-system — */
 .link-system {
@@ -649,33 +656,7 @@ label.toggle-button span {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "chart_intro.js" */
-$(document).on('mouseenter', '.char-intro', function () {
-	const img = $(this).find('.char-intro__img');
-	const rect = this.getBoundingClientRect();
-
-	// Check if portrait would overflow right edge
-	const overflowRight = (rect.right + img.outerWidth(true) + 10) > screen.width;
-
-	if (overflowRight) {
-		img.css({
-			left: 'auto',
-			right: 'calc(100% - 10px)'
-		});
-	} else {
-		img.css({
-			right: 'auto',
-			left: 'calc(100% + 10px)'
-		});
-	}
-});
-
-$(document).on('mouseleave', '.char-intro', function () {
-	const img = $(this).find('.char-intro__img');
-	// Reset inline styles so it doesn’t stay flipped
-	img.css({ left: '', right: '' });
-});
-/* twine-user-script #2: "general.js" */
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "general.js" */
 function nobr(content) {
     return `<<nobr>>${content}<</nobr>> `
 }
@@ -690,29 +671,22 @@ $(document).on(':passagedisplay', function() {
 
 $(document.head).append("<link rel='icon' href='media/icons/browser_tab.png'>");
 
-
-
-// Config.history.maxStates = 40;
-/* twine-user-script #3: "preview_portrait.js" */
+/* twine-user-script #2: "preview_portrait.js" */
 
 setup.drawPreviewPortrait = function(id_name) {
-  // Capture the character’s display name now
   var chars       = State.variables.characters || {};
   var player      = State.variables.player     || {};
   var displayName = (chars[id_name] && chars[id_name].name)
                     ? chars[id_name].name
                     : (player.name || id_name);
 
-  // Wait until after SugarCube has rendered the passage…
   $(document).one(':passageend', function() {
-    // 1) Grab the <select> by its ID
     var $select = $('#listbox-settingsportrait-mode');
     if (!$select.length) {
       console.warn('drawPreviewPortrait: cannot find #listbox‑settingsportrait‑mode');
       return;
     }
 
-    // 2) Insert (or reuse) a plain <img> right after it
     var imgId = 'preview-' + id_name;
     var $img  = $('#' + imgId);
     if (!$img.length) {
@@ -721,12 +695,11 @@ setup.drawPreviewPortrait = function(id_name) {
         class: 'portrait-preview-img',
         alt:   displayName,
         title: displayName,
-        src:   ''   // filled in by update()
+        src:   ''   
       });
       $select.after($img);
     }
 
-    // 3) The updater picks the numeric folder (0│1│2) and swaps in the URL
     function update() {
       var mode = State.variables.settings.portrait_mode;
       if (typeof mode !== 'number') mode = 0;
@@ -734,7 +707,6 @@ setup.drawPreviewPortrait = function(id_name) {
       $img.attr({ src: url, alt: displayName, title: displayName });
     }
 
-    // 4) Do the initial draw, then re‑draw on every change
     update();
     $select
       .off('change.drawPreview')
@@ -744,7 +716,7 @@ setup.drawPreviewPortrait = function(id_name) {
 
 
 
-/* twine-user-script #4: "scene_list.js" */
+/* twine-user-script #3: "scene_list.js" */
 setup.getScene = function (scene_idn) {
     const cur_scene = scene_list[scene_idn];
     return nobr(cur_scene);
@@ -763,19 +735,16 @@ const scene_list = {
             <p>
                 This project is an interactive 
                 <i style="font-size: 0.9em;">story about betrayal, hidden desires and unexpected outcomes.</i><br>
-                It's aimed to be quite a small one and will be finished supposedly at version 4 or 5.
+                It's aimed to be quite a small one and will have only about 4-5 versions.
             </p>
             <p>
-                <b>Current version is: v1.5</b><br>
+                <b>Current version is: v2.</b><br>
                 This version contains:
                 <ul style="margin:0;"> 
-                    <li>UI updates, </li>
-                    <li>More portrait options,  </li>
-                    <li>Text corrections and updates for version v1, </li>
-                    <li>Alternative scene for main branch, </li>
-                    <li>More SFW media, </li>
-                    <li>Teaser of new endings for main branch </li>
-                    </ul> 
+                <li>New endings for Main branch, </li>
+                <li>New 'Between Worlds' branch, </li>
+                <li>New 'Pizza' branch </li>
+                </ul> 
                 <span class="tip-small">(If you do not like the current state of the project, please wait for updates to come before evaluating the whole project) </span>
             </p>
             <p>
@@ -797,25 +766,22 @@ const scene_list = {
         </div>
     `,
 
-
+    
     'info': `
         <div class="index-block">
-            <p> Welcome, I'm <b>keksx4</b> and this one of my projects.</p>
+            <p>Welcome, I'm <b>keksx4</b> and this one of my projects.</p>
             <p>
                 This project is an interactive 
-                <i style="font-size: 0.9em;">story about betrayal, hidden desires and unexpected outcomes.</i>
+                <i style="font-size: 0.9em;">story about betrayal, hidden desires and unexpected outcomes.</i><br>
             </p>
             <p>
-                <b>Current version is: v1.5</b><br>
+                <b>Current version is: v2.</b><br>
                 This version contains:
                 <ul style="margin:0;"> 
-                    <li>UI updates, </li>
-                    <li>More portrait options,  </li>
-                    <li>Text corrections and updates for version v1, </li>
-                    <li>Alternative scene for main branch, </li>
-                    <li>More SFW media, </li>
-                    <li>Teaser of new endings for main branch </li>
-                    </ul> 
+                <li>New endings for Main branch, </li>
+                <li>New 'Between Worlds' branch, </li>
+                <li>New 'Pizza' branch </li>
+                </ul> 
                 <span class="tip-small">(If you do not like the current state of the project, please wait for updates to come before evaluating the whole project) </span>
             </p>
             <p>
@@ -1069,8 +1035,8 @@ const scene_list = {
         <<br>> 
         <<speechLink "Your crush on Brock since childhood..." "branch_1_5" "main" "phrase" "grace">>
         <<speechLink "'You are not a lesbian, isn't it?'" "" "disabled">>
-        <<speechLink "'You like pizza with anchovies...'" "" "disabled">>
-        <<speechLink "Wake up!" "" "disabled">>
+        <<speechLink "You like pizza with anchovies..." "branch_pizza" "pizza" "phrase" "grace">>
+        <<speechLink "Wake up!" "branch_bw_1" "bw" "phrase" "grace">>
 
     `,
     'branch_1_5': `
@@ -1911,23 +1877,819 @@ const scene_list = {
         <<narration "$player.name knew then that if she wanted peace, she'd have to take harsher steps to finally put an end to the chaos tearing through her life. ">>
 
         <<br>> 
-        <<speechLink "$player.name decided to escape" "" "disabled">>
-        <<speechLink "$player.name decided to get rid of them by any means" "" "disabled">>
-        <<speechLink "$player.name decided to help them let go" "" "disabled">>
-        <<speechLink "$player.name decided to make them her pets" "" "disabled">>
+        <<speechLink "$player.name decided to escape" "branch_1_end_4" "ending">>
+        <<speechLink "$player.name decided to get rid of them by any means" "branch_1_end_5" "ending">>
+        <<speechLink "$player.name decided to help them let go" "branch_1_end_6" "ending">>
+        <<speechLink "$player.name decided to make them her pets" "branch_1_end_7" "ending">>
     `,
 
-   
+    'branch_1_end_4': `
+        <h1 class="ending-title"> Ending 5 </h1>
+
+        <<narration "$player.name decided she could no longer face her life at home, she needed to escape.">>
+        <<narration "She first fled to a neighboring country, hoping the change of scenery would help her shake off the past. <br>
+            When messages followed her there, she moved on again, then again, hopping from place to place in search of peace.">>
+        <<narration "But no matter where she went, her past kept catching up.">>
+        <<narration "Desperate for relief, $player.name began turning to different substances: pills, alcohol, anything that could numb her mind and bring a moment of pleasure.">>
+        <<narration "At first, these escapes worked. But soon she found herself lost in a haze of fleeting highs and deeper lows, unable to break free from the cycle.">>
+        <<narration "Finally, she ended up on a small island far from everything she knew and anyone to find. 
+            There, with no ties and no direction, $player.name became known as the local “free spirit.” <br>
+            Men on the island sought her out, and she found herself offering her company in exchange for a few hours of distraction.">>            
+        <<media_scene 'jean_beach' '28' '20'>>
+        <<media_scene 'jean_beach2' '20' '28'>>
+
+        <<narration "What started as a desperate bid for freedom became a new kind of prison, one built from her own regrets and the fleeting comforts she chased.">>
+        <<media_scene 'jean_beach3' '20' '28'>>
+        <<media_scene 'jean_beach4' '28' '22'>>
+
+        <h1 class="the-end-sign"> THE END </h1>
+    `,
+
+    'branch_1_end_5': `
+        <h1 class="ending-title"> Ending 6 </h1>
+
+        <<narration "$player.name decided it was time to cut ties for good. She laid out a plan to make Brock and Grace disappear from her life.">>
+
+        <<narration "First up was Brock. <br>
+            $player.name quietly tipped off the cops about his shady deals. Before he knew it, he was hauled off in cuffs.  <br>
+            Prison beat the arrogance out of him. When he got out, he was a meek and overly religious shadow of his old self. ">>
+        <<media_scene "brock_depressed" '26' '18'>>
+
+        <<narration "Next was Grace.<br> 
+            $player.name emotionally provoked her, having previously reported her to the police.
+            Grace was in a heat of the moment and resisted arrest. The following psychological check led to her to be locked and have a mandatory treatment.
+            Convinced this was $player.name's doing and seeing no future with her any longer, Grace withdrew entirely, locking herself away from the world.">>
+        <<media_scene "grace_careless" '20' '22'>>
+
+        <<narration "With them both sidelined, $player.name felt a strange thrill at how easy it'd been. <br>
+            The ease of her victory forced her to reconsider what she truly wanted from life. <br>
+            She realized she craved power and control, but she also needed purpose and income.">>
+        
+        <<narration "After a short vacation on a distant island, she changed work to a part time at a government office for steady pay and coverage.">> 
+        <<narration "Simultaneously, she launched herself as a private investigator, forming her growing network of contacts throughout the city.">>
+        
+        <<narration "Her services proved invaluable, as she achieved her goals by any means necessary.">>
+
+        <<narration "She could dig up necessary information from influential people.">>        
+        <<media_scene 'mafia_blowjob' '24' '22'>> 
+        
+        <<narration "Train an unobedient wife.">>   
+        <<media_scene 'train_wife' '30' '20'>>
+        
+        <<narration "Make someone disappear in basements.">>           
+        <<media_scene 'basement_torture' '20' '26'>> 
+
+        <<narration_comment "...">>
+
+        <<narration "Before long, $player.name was a local legend. <br>
+            People whispered her nicknames and discussed rumors about her over late-night drinks.">>   
+
+
+        <h1 class="the-end-sign"> THE END </h1>
+    `,
+
+    'branch_1_end_6': `
+        <h1 class="ending-title"> Ending 7 </h1>
+
+        <<narration "$player.name came to a realization, it was time to become a better version of herself.">>
+        <<media_scene "reflect" '20' '18'>>
+
+        <<narration "When Brock was arrested for some illegal activities, $player.name didn't turn her back on him. <br>
+        She paid for his bail and supported him in court. Thanks to her help, his sentence was reduced. <br>
+        Grateful and now humbled, Brock promised to turn his life around and always be there for $player.name.">>
+
+        <<narration "As for Grace, $player.name encouraged her to seek professional help and arranged for her to join a treatment program at a psychological center. <br>
+        The recovery took years, but Grace slowly transformed into a strong, self-sustained woman with a stable career in an office job. <br>
+        Though she accepted that a romantic future with $player.name was no longer possible, she remained supportive and ready to help $player.name in any way she could as a close friend.">>
+
+        <<narration "These experiences made $player.name realize how much she valued helping others. She began to rethink what she wanted from life.">>
+        
+        <<narration "After a short vacation on a distant island, she returned with a fresh perspective. ">>
+        <<narration "She left her high-stress job and took a lower-paying role that gave her more time and peace of mind. 
+            Alongside that, she started doing charity work and eventually became the head of a local community center.">>
+        <<narration "With it she launched a chain reaction of helping hand.">>
+        <<media_scene "helping_hands" '26' '20'>>
+
+        <<narration_comment "...">>
+
+        <<narration "A lot of people will remember her for all the help she did, the kindness she showed and the lives she touched.">>
+        <<narration "She will stay in their memory as a local saint.">>
+        <<media_scene "saint" '26' '20'>>
+
+        <h1 class="the-end-sign"> THE END </h1>
+    `,
+
+    'branch_1_end_7': `
+        <h1 class="ending-title"> Ending 8 </h1>
+
+        <<narration "$player.name resolved to keep Brock and Grace close, on her terms, and reduce them to her “pets”. ">>
+
+        <<narration "She had uncovered compromising evidence of Brock's minor, but illegal dealings.
+            With a quiet threat to expose him, she shattered what little confidence he had left.    <br>
+            Terrified of the possible consequences, Brock agreed to bend to her will and follow her rules. <br>
+            What he didn't realize was how easily submission would take root. Over time, he found a strange, grim satisfaction in serving her.">>
+        <<media_scene "brock_sub" '24' '20'>>
+
+         <<narration "Grace, still haunted by past mistakes and the possessiveness towards her ex-girlfriend, embraced $player.name's control with unsettling eagerness. 
+            From their very first conversation about obedience, she agreed to every command, clinging to any sense of purpose $player.name was willing to offer.">>
+        <<media_scene "grace_sub"  '26' '20'>>
+
+        <<narration "Not long after, $player.name accepted a new position at a private club, a role that fed her hunger for influence, possibility and the kind of connections that aligned perfectly with her newly awakened desires.">>
+        <<media_scene "jean_mistress"  '16' '28'>>
+
+        <<narration "$player.name established a strict daily routine: <br>
+            Morning: Brock prepared breakfast and cleaned the living spaces. <br>
+            Afternoon: Grace helped managing $player.name's new club business, filing reports, organizing evidence and handling client calls without question. <br>
+            Evening: Both knelt for a debriefing, recounting their day's tasks in hushed tones. Any hesitation or mistake drew $player.name's cold displeasure and punishment.">>
+    
+        <<narration "“Chors” system also extended to the bedroom.">>
+
+        <<narration "$player.name took a perverse delight in Brock's broken spirit. 
+            He flinched at her sharp voice, eyes downcast, yet a strange contentment glimmered when he fulfilled her demands and she got on top of him.">> 
+        <<media_scene "jean_top_brock"  '22' '22'>>
+        
+        <<narration "Grace stood ready at all times, her eagerness unwavering and her loyalty absolute.">>
+        <<media_scene "grace_sub_eager"  '20' '20'>>
+        
+        <<narration_comment "...">>
+        
+        <<narration "Over weeks, Brock's old defiance vanished completely, replaced by a muted eagerness to please.">>
+        <<media_scene "brock_broken"  '20' '22'>>
+
+        <<narration "Grace, ever compliant, grew more confident in her role, transmuted herself into abolute pet.">>
+        <<media_scene "grace_pet" '24' '20'>>
+
+        <<narration "Together, they formed $player.name's perfect team. <br> 
+        She wielded her authority like a celebrated trophy, 
+        while Brock and Grace moved through each day becaming more and more $player.name servants lost in obedience and less and less their former selves.">>
+        
+        <h1 class="the-end-sign"> THE END </h1>
+    `,
 
     //#endregion
 
 
 
+    //#region Pizza Branch 
 
+    'branch_pizza': `
+        <<dialog "brock" "What the fuck is wrong with you?">>
+        <<dialog "jean" "No, I'm not...">>
+        <<dialog "grace" "I know it for sure.">>
+        <<dialog "brock" "You are disgusting!">>
+        <<narration "He screamed from despair.">> 
+        <<media_scene "brock_scream"  '22' '18'>>
+
+        <<narration "In that instant, the door flew open and their parents rushed in.">> 
+        <<dialog "father" "What on earth is going on here?">> 
+        <<dialog "jean" "I thought you were in a shop.">> 
+        <<dialog "father" "No, we tried to eavesdrop what is going on here all that time. Like a proper family should.">> 
+        <<dialog "jean" "What the fuck?!">> 
+        <<dialog "mother" "Honey, we heard... we heard about your liking of pizza with anchovies.">> 
+        <<dialog "mother" "It's okay, we still love you. But... is it true?">> 
+        <<narration "$player.name stared at them for a long moment, then exhaled.">> 
+
+        <<br>> 
+        <<speechLink "She confessed" "branch_pizza_2">>
+    `,
+
+    'branch_pizza_2': `
+        <<dialog "jean" "Yes.">> 
+        <<narration "Silence filled the room.">> 
+        <<dialog "mother" "Disgusting! How could we raise someone to be such a garbish!">> 
+        <<dialog "brock" "You know sis, I fucked your girlfriend because I was jealous of you.">> 
+        <<dialog "brock" "But now I feel like I'm gonna puke just from the fact that I know you.">> 
+        <<dialog "grace" "See what I deal with? That's why I need to go extreme from time to time to wind up, as I still love you and wanna be with you.">> 
+        <<dialog "grace" "...even with your filthy habits.">> 
+        <<dialog "father" "You still love her? Even after knowing she's like that? You're a freakin' saint!">> 
+        <<dialog "mother" "She really is! Grace, you can fuck whoever you want if you are able to get along with that hideosity.">> 
+        <<narration "Father's face twisted in revulsion, as he turned to $player.name and gave her another gaze.">> 
+        <<dialog "father" "And you, you should treat Grace like a goddess. And always try to think how to please you.">> 
+        <<dialog "father" "But maybe except times when you eat pizza with... with...">> 
+        <<narration "He gags. Hard. Then vomits into a nearby plant.">> 
+        <<media_scene "father_puke"  '22' '20'>>
+
+        <<narration "The plant dies immediately.">> 
+        <<media_scene "plant_dies"  '22' '20'>>
+
+        <<dialog "mother" "See what you've done to your father?">> 
+        <<dialog "mother" "Oh, how awful, how awful.">> 
+        <<dialog "grace" "Poor plant.">>
+        <<narration "Grace looked genuinely sad.">> 
+        <<dialog "brock" "No more! I can't stand in a room with her anymore!">> 
+        <<narration "Abruptly, Brock took a quick run and jumped out of the window.">> 
+        <<media_scene "brock_out_of_window"  '26' '18'>>
+        
+        <<narration "$player.name stands, frozen in emotional whiplash.">> 
+        <<narration "Grace grabbed her arm and started dragging her away into another room.">> 
+        <<dialog "grace" "See? It can be hard for people. And I also sometimes crack under the weight. But I still love you.">>
+        <<narration "Grace grabbed $player.name's arm and started dragging her away into another room.">> 
+
+        <<br>> 
+        <<speechLink "$player.name followed her" "branch_pizza_3">>
+        
+    `,
+
+    'branch_pizza_3': `
+        <<narration "While moving to another room, Grace decided to speak up.">>
+        <<dialog "grace" "Maybe it's me who fucked up to accept all of that. But who gives a shit anyway?">> 
+        <<narration "Grace grinned with a cold smile.">>
+        <<dialog "grace" "Let's get on with some real fun.">> 
+        <<narration "$player.name was too lost to process everything that was happening.">>
+        <<dialog "jean" "Ehh, who cares?">>
+        <<dialog "jean" "Yeah, let's start!">> 
+        <<narration "The moment they entered the room and shut the door behind them, Grace tossed a scented candle into the wall like it was a declaration of war. <br> 
+            It exploded into waxy petals of lavender and trauma.">>
+
+        <<dialog "grace" "Tonight, we burn the shame, baby.">> 
+        <<dialog "jean" "Is this foreplay or a nervous breakdown?">> 
+        <<dialog "grace" "Why not both?">> 
+
+        <<narration "Grace came closer and start passionate kissing.">>
+        <<media_scene "grace_kiss_jean"  '22' '24'>>
+        
+        <<narration "Grace went on top and start to make kisses with light biting.">>
+        <<media_scene "grace_top_kiss_jean"  '28' '18'>>
+        
+        <<br>> 
+        <<speechLink "Meanwhile, downstairs..." "branch_pizza_4">>
+    `,
+
+    'branch_pizza_4': `
+        <<narration "Mother was praying over Father, who was still vomiting into what's left of the dead plant.">>
+        <<dialog "mother" "Deliver us from anchovies...">> 
+        <<dialog "father" "Why God? Why did you let that happen?">> 
+        <<narration "Brock limped back through the front door. His heroic jump resulted in a twisted ankle, but a saved(?) mind.">>
+        <<dialog "brock" "She's ruined me. I'm emotionally lactose intolerant now.">> 
+        <<dialog "mother" "She was always the weird one. Remember when she put mustard on toast?">>   
+        <<media_scene "toast"  '24' '20'>>
+
+        <<dialog "father" "Monstrous.">> 
+        <<narration "He sobbed.">>
+        <<dialog "brock" "Hey, it's not that bad.">> 
+        <<narration "Mother switched her gaze onto the ceiling andd closed her eyes.">>
+        <<dialog "mother" "We're failure as parents.">>  
+
+        <<br>> 
+        <<speechLink "Back upstairs" "branch_pizza_5">>
+    `,
+
+    'branch_pizza_5': `
+        <<narration "$player.name and Grace lied on the bed, breathless, surrounded by broken furniture and confused emotions.">>
+        <<dialog "grace" "If this is wrong, I don't wanna be right. But also, maybe we should see a couples therapist.">>
+        <<dialog "jean" "Only if they accept payment in trauma and sarcasm.">>
+        <<narration "They high-fived. And it was weirdly tender.">>
+        <<dialog "grace" "One more game, one more game.">>
+        <<dialog "jean" "Yep, let's play a game of 'rock, paper, scissors', but without rock and paper.">>
+        <<narration "Grace only smirked mischievously to that suggestion.">>
+        <<media_scene "jean_grace_scissor"  '30' '20'>>
+
+        <<narration "After another half an hour of that interesting game, Grace decided to finish herself off by topping $player.name.">>
+        <<media_scene "grace_top_jean_scissor"  '30' '20'>>
+
+        <<narration "After cumming, Grace let out a load joyful cry.">>
+        <<dialog "grace" "Woohoo, I won.">>
+        <<dialog "jean" "Babe, please, I...">>
+        <<dialog "grace" "Sure, sure, honey.">>
+        <<narration "Grace finished off $player.name, making her reach her peak.">>
+        <<media_scene "grace_finish_jean"  '30' '20'>>
+
+        <<br>> 
+        <<speechLink "In a month" "branch_pizza_6_ending" "ending">>
+    `,
+
+    'branch_pizza_6_ending': `
+        <h1 class="ending-title"> Ending 9 </h1>
+
+        <<narration "<<char_intro>>, and <<char_intro 'grace'>>, now lived in a half-renovated duplex that smelled like incense, takeout and unspoken guilt. 
+        They liked to host “Wine & Breakdown” nights, where crying is encouraged and pants are optional. ">>
+        <<media_scene "grace_jean_cinema"  '28' '18'>>
+        <<media_scene "grace_jean_cinema2"  '28' '20'>>
+        <<media_scene "grace_jean_cinema3"  '28' '20'>>
+        
+        <<narration "And every time $player.name sees a pizza menu? <br>
+            She and Grace look at each other, nod silently and order plain cheese.<br>
+            Because some things, even in love, are unforgivable.">>
+        <<media_scene "grace_jean_pizza_end"  '24' '24'>>
+        
+
+        <<narration "As for the others...">>
+
+        <<narration "<<char_intro 'brock'>>, joined a local improv group where he exclusively plays betrayed brothers and misunderstood lovers. <br>
+            He cries on stage a lot. People think it's part of the act. It's not.">>
+
+        <<narration "<<char_intro 'mother'>>, took a vow of silence, which lasted 8 minutes. And that only because she was busy watching a Youtube tutorial. <br>
+            As the respected administrator of newly found Facebook group titled “Anchovy Trauma Survivors”, with twelve very active members, 
+            she posts daily quotes about purity, gluten-free living and proper pizza toppings.">>
+
+        <<narration "<<char_intro 'father'>>, quietly converted the garage into what he calls a “personal reflection chamber”. <br>
+            It's just a folding chair, a space heater and a mirror that he screams into. He claims it's “cathartic”. 
+            The neighbors call the cops once a week.">>
+
+        <<narration "They don't talk much, but everyone seems... weirdly okay with that.">>
+
+
+        <h1 class="the-end-sign"> THE END </h1>
+    `,
+
+    //#endregion
+
+
+
+    //#region bw Branch 
+
+    'branch_bw_1': `    
+        <<narration "After just a blink, the world in front of $player.name started to blur.">>
+        <<dialog "grace" "$player.name... wake up!">>
+        <<narration "Grace voices sounded distant and echoing from afar.">>
+        <<dialog "jean" "Huh?">>
+        <<dialog "grace" "WAKE UP!">>
+        <<narration "And then everything went blank...">>
+        <<narration_comment "...">>
+
+        <<narration "$player.name opened her eyes to find herself lying in bed.">>
+        <<narration "Grace stood nearby, all rumbled and busy.">>
+        <<dialog "grace" "Finally! You've been out for ages.">>
+        <<dialog "grace" "We've got so much to prep today, remember?">>
+        <<dialog "jean" "Prep?">>
+        <<dialog "grace" "Yeah, what's with you?">>
+        <<dialog "grace" "You're okay?">>
+        <<narration "$player.name was visibly confused.">>
+        <<dialog "jean" "Moment ago there we were in a room with Brock... screaming and cursing and now...">>
+        <<dialog "grace" "Honey, honey, calm down...">>
+        <<dialog "grace" "We haven't seen your brother in years.">>
+        <<narration "$player.name heard the words, but couldn't believe them.">>
+        <<dialog "jean" "Wha.. what?">>
+        <<dialog "grace" "Maybe you've been too nervous lately.">>
+        <<dialog "grace" "I know the wedding is a big deal, but I always tell you to take breaks as I know you are too much of a working bee.">>
+        <<dialog "jean" "I... what? Which wedding?">>
+        <<dialog "grace" "Ours...">>
+        <<narration "Grace said softly, watching $player.name's reaction with a flicker of anxiety in her eyes.">>
+        <<dialog "grace" "It would be in a few days.">>
+        <<dialog "grace" "Now you're really scaring me.">>
+        <<dialog "jean" "I need to lie down a bit.">>
+        <<dialog "grace" "Sure, honey. I'll let you rest here.">>
+        <<dialog "grace" "If anything you need, just call me, I'm near.">>
+        <<narration "With those words, she left the room visibly anxious and nervous.">>
+        <<narration "$player.name lied down on a bed, completely lost in current events.">>
+        <<dialog "jean" "What is real? The wedding, the betrayal, or non of it?">>
+        <<dialog "jean" "Am I got mad?">>
+
+        <<br>>        
+        <<speechLink "$player.name tried to ease her mind" "branch_bw_2">>
+    `,
+
+    'branch_bw_2': `   
+        <<narration "$player.name closed her eyes, hoping to silence the noise of questions in her head.">>
+        <<narration "As she drifted into unconsciousness, she felt a strange pull, as if her body remained behind while something deeper traveled.">>
+        <<narration_comment "...">>
+        <<narration "The door creaked open.">>
+        <<narration "$player.name opened her eyes and saw Brock standing there. He wore a sleek, expensive suit she'd never see him having.">>
+        <<dialog "brock" "Hey there, beautiful.">>
+        <<dialog "jean" "What are you doing here?">>
+        <<narration "Brock raised an eyebrow, clearly not expecting that kind of greeting.">>
+        <<dialog "brock" "Huh? I came to get my dear fiancée for our date.">>
+        <<dialog "jean" "You have a fiancée?">>
+        <<narration "He looked confused at first, then a little more tense with his smile faltering.">>
+        <<dialog "brock" "Yes. That one, who is lying in bed asking me strange questions.">>
+        <<narration "$player.name's mind spun. Her breath got caught as she began to piece together something that couldn't make sense.">>
+        <<dialog "jean" "You mean... me?">>
+        <<dialog "brock" "Of course it is you.">>
+        <<dialog "jean" "What the hell is happening? Is this some prank? Are you and Grace messing with me?">>
+        <<narration "His expression changed, removing clear excitement he had seconds ago.">>
+        <<dialog "brock" "I don't know who that Grace is. Listen, If you wanted to cancel our date, you could've just said so.">>
+        <<dialog "jean" "Stop with this date nonsense, you are my brother!">>
+        <<dialog "brock" "Do you go again with it?">>
+        <<narration "Brock's smile dropped completely. His brow furrowed in frustration.">>
+        <<dialog "brock" "It was fine when we were children, but I said it million times that I do not like when you call me like that.">>
+        <<dialog "brock" "This was not funny even we were just neighborhood kids.">>
+        <<narration "$player.name grabbed her head, overwhelmed.">>
+        <<dialog "jean" "What's going on?!">>
+        <<narration "Brock looked at her, now seemingly worried.">>
+        <<dialog "brock" "It's not a joke of yours?">>
+        <<dialog "brock" "Dear, if you really unwell, let's call a doctor or...">>
+        <<dialog "jean" "No! no...">>
+        <<dialog "jean" "Just... please let me rest a while.">>
+        <<dialog "brock" "Alright. I'll be in the kitchen if you need me.">>
+        <<narration "He left, casting one last wary glance over his shoulder.">>
+        <<dialog "jean" "Fuck! What's going on?">>
+        <<narration "$player.name curled into herself, her thoughts were racing.">>
+        <<narration "She tried to gather all the information and come to conclusions, but all of it was too unreal.">>
+        <<narration "She glanced at the bed and her gaze froze for a couple of moments.">>
+
+        <<br>>        
+        <<speechLink "Let's try to do it again!" "branch_bw_3" "" "phrase" "jean">>
+    `,
+
+    'branch_bw_3' : `    
+        <<narration "$player.name lay back on the bed once more, closing her eyes tightly, as her thoughts were roaming wildly.">>
+        <<narration "For a second she saw something that look like strings of light.">>
+        <<narration "Then everything went blank.">>
+        <<narration_comment "...">>
+
+        <<narration "$player.name opened her eyes again and found herself staring at the same ceiling.">>
+        <<narration "Something felt different, though. The air was warmer, the sheets softer.">>
+        <<dialog "grace" "$player.name...">>
+        <<narration "A soft, familiar touch grazed $player.name's arm.">>
+        <<narration "She turned to see Grace lying beside her, relaxed and murmuring her name.">>
+        <<narration "$player.name take a look around and found out that they are both naked under the blanket, seemingly after a long hours of passion.">>
+        <<dialog "jean" "Grace, what...">>
+        <<narration "Before she could finish, the door slammed open.">>
+        <<dialog "brock" "What the fuck?!">>
+        
+        <<narration "Grace's face was flushed, her eyes wide with panic.">>
+        <<dialog "jean" "Honey, I... I can explain.">>
+        <<narration "Grace stammered, her face flushed with guilt and shame. Her voice shook, and tears welled up in her eyes as she fumbled to find words.<br>
+            $player.name, on the other hand, stayed quiet, looking on that scene in awe.">>
+        <<narration "Brock stood frozen, his heart pounding in his chest, as the weight of what he was seeing crashed down on him.">>
+
+        <<br>>
+        <<speechLink "Okay... explain then..." "branch_bw_4" "" "phrase" "brock">>
+    `,
+
+    'branch_bw_4' : `    
+        <<narration "Brock whispered, his voice trembling with a mixture of hesitation and desperation. 
+            Deep down, he already knew there was no explanation that could make this right anyhow.">>
+       <<narration "Grace got out of bed, still covering herself with the sheet, and walked towards Brock with tears in her eyes. 
+            $player.name stays in bed without any movement, her face is in amaze, like she's seetig in the theatre.">>
+        <<dialog "grace" "Honey, I'm so sorry... I don't know how this happened...">>
+        <<narration " She trailed off, glancing at the floor.">> 
+        <<dialog "grace" "$player.name came over to help me with some things around the house while you were away... and we ended up talking... laughing...">>
+        <<narration "She paused, her voice cracking as she struggled for words.">> 
+        <<narration "$player.name quietly watched the scene unfolding before her.">>
+        <<dialog "jean" "Hm, a painfully familiar scene.">>
+        <<narration "She whispered, still confused, but slowly starting getting a grasp of it.">>
+        <<narration "So she decided to play along.">>
+        <<dialog "jean" "She was stressed out...">>
+        <<narration "Seeing him not acting back, she continued with more confidence.">>
+        <<dialog "brock" "And I think you understand why, your job's so far away... and you don't spend time together...">>
+        <<narration "Brock's heart pounded as his fury rose, his gaze fixed on them both.">>
+        <<dialog "brock" "So you're telling me that's why you're in bed together? Because I'm working too much?">>
+        <<narration "His voice quivered with the weight of his anger.">>
+        <<narration "He took a shaky breath, barely able to contain his frustration.">>
+
+        <<br>>
+        <<speechLink "I need to dive in again!" "branch_bw_5" "" "phrase" "jean">>
+    `,
+
+    'branch_bw_5' : `  
+        <<narration "Brock and Grace were stunned by $player.name's unexpected exclamation.">>
+        <<dialog "brock" "What are you...">>
+        <<narration "But she didn't let him finish. She grabbed Grace's hand and, still naked, tossed her into Brock's hands. <br>
+          Then, without another word, she pushed them both out of the room and slammed the door shut.">>
+        <<narration "She lay down on the bed, trying to focus on the light strings she had seen before.">>
+        <<narration "Surprisingly, they appeared again. This time clearer than ever. <br>
+        $player.name reached toward the one at the center.">>
+        <<narration "Then everything went blank.">>
+        <<narration_comment "...">>
+
+        <<narration "$player.name opened her eyes and found herself standing across from Grace and Brock.">>
+        <<dialog "grace" "...not your gender.">>
+        <<narration "She took a shaky breath, eyes fixed on $player.name.">>
+        <<dialog "grace" "You're my everything... but Brock was here when you weren't. He made me feel seen and heard in a way I hadn't felt in a long time.">>
+        <<dialog "jean" "Fuck this really worked.">>
+        <<narration "Brock and Grace went quiet and looked questionably at $player.name.">>  
+        <<narration "$player.name looked at them and the situation like it was already just another memory, another version.">>    
+        <<dialog "jean" "I don't care about that shitshow now.">> 
+        <<narration "At that exact second, she stepped through the door, leaving them speechless.">> 
+        <<narration "Her decision was fast but certain. <br>
+            She chose to embrace the unexpected possibilities and use them however her heart desired.">>   
+        <<narration_comment "...">>
+        
+        <<br>>
+        <<speechLink "Some time later" "branch_bw_6">>
+    `,
+
+    'branch_bw_6' : `      
+        <<narration "$player.name dove again and again.">>
+        <<narration "Each time, the threads became easier to grasp. The strange glowing fibers now felt like handles to other lives, 
+            paths that could be wandered like rooms in an endless corridor.">>
+        <<narration "And she wandered.">>
+        <<narration "Across strange dimensions and twisted reflections of her own life, $player.name played various roles. <br> 
+            Sometimes familiar, sometimes surreal. 
+            She became dozens of versions of herself: the stern lawyer, the rebellious artist, the fighter against machines, the mother of six, the cult leader.">>
+
+        <<narration "At first, it was disorienting. Terrifying. But pretty quickly, it became... thrilling.">>
+        <<narration "She moved between timelines like slipping through curtains and, in time, she grew used to the rhythm of it. <br>
+            Used to the way she wore each $player.name's different skin, held different memories, lived through different desires.">>
+            
+        <<narration "The petty arguments from her 'original' world: the betrayal, the drama, the aching confusion, now seemed so small, so laughably simple. 
+            Like a stage play put on by people who didn't know there was a sky outside the theatre.">>
+
+
+        <span id="link1">
+            <div class="speechLink">
+                <div class="speechLink__bubble">
+                    <<link "About worlds">>
+                        <<run $("#link1").toggle()>>
+                        <<run $("#text1").css("display", "block")>>
+                        <<run $("#link2").css("display", "block")>>
+                    <</link>>
+                </div>
+            </div>
+        </span>
+        <span id="text1" style="display: none">
+            <<narration_comment "...">>
+            <<narration "Some worlds were closed like prisons. 
+            Entire societies where the body was hidden and love was rationed in whispers, where even eye contact could be a crime.">>
+
+            <<media_scene 'burqa' '18' '20'>>
+        </span>
+        
+
+        <span id="link2" style="display: none">        
+            <div class="speechLink">
+                <div class="speechLink__bubble">
+                    <<link "Others?">>
+                        <<run $("#link2").toggle()>>
+                        <<run $("#text2").css("display", "block")>>
+                        <<run $("#link3").css("display", "block")>>
+                    <</link>>
+                </div>
+            </div>
+        </span>
+        <span id="text2" style="display: none">
+            <<narration_comment "...">>
+            <<narration "Others? Wild, open, hungry.">>
+            <<narration "There were worlds where desire was sacred. <br>
+                Where polyamorous clans ruled cities. <br>
+                Where pleasure was the currency of politics. <br> 
+                Where $player.name, or some version of her, woke up in silk sheets beside people she'd never met and still somehow loved.">>
+
+            <<media_scene 'public' '40' '23' 'video'>>
+            <<media_scene 'public2' '40' '23' 'video'>>
+        </span>
+
+
+        <span id="link3" style="display: none">
+            <div class="speechLink">
+                <div class="speechLink__bubble">
+                    <<link "And some were horrifying">>
+                        <<run $("#link3").toggle()>>
+                        <<run $("#text3").css("display", "block")>>
+                    <</link>>
+                </div>
+            </div>
+        </span>
+        <span id="text3" style="display: none">
+            <<narration_comment "...">>
+            <<narration "One dimension was especially disturbing. ">>
+            <<narration "In that one $player.name was put into asylum...">>
+            
+            <<media_scene 'asylum' '22' '16'>>
+            <<narration "Different doctors, together with her parents, begged her to get out of delusions and came back on earth. <br>
+                Also sometimes trying ...unorthodox methods... ">>
+            <<narration "...$player.name escaped that one for good, but the memory of it will always be remained.">>
+
+            <<br>>
+            <<speechLink "Time passed" "branch_bw_7">>
+        </span>
+    `,
+
+    'branch_bw_7': `
+        <<narration "$player.name noticed something unsettling - the glow of the strings began to fade.">>
+        <<narration "Their once vivid light was dimming. 
+            One by one, the threads that carried her between worlds blinked out like dying stars.">>
+        <<media_scene 'fading' '20' '20'>>
+
+        <<narration "She didn't want to let it go. <br>
+            The thought of losing the ability terrified her, not just because of what it meant for her freedom, 
+            but because $player.name wasn't sure who she was anymore without all those other versions of herself.">>
+        <<narration "But time, even fractured across dimensions, was still a river. And hers was running low.">>
+        <<narration "So she reflected and started preparing. <br>
+            $player.name acknowledged that alternate lives had reshaped her - she saw the world, and herself, through dozens of lenses now. 
+            Joy and pain, strength and weakness, control and surrender, - they all had taught her something.">>
+        <<narration "And with that understanding, $player.name felt she was ready.">>
+        <<narration "Ready and prepared to choose, to commit, with eyes open, to one life. 
+            One version of reality where she could carry all she'd learned and actually live, live the usual one life.">>
+        <<narration "$player.name trained her mind and body, stored memories and notes from the other versions. <br>
+            Studied the people she met, the roles she played, the mistakes she made. <br>
+            She even practiced how to fake to be 'normal' again, in case she had to.">>
+        <<narration "And when the time finally came, when the last few threads began to fray, $player.name looked at the final choices she had been thiking of.">>
+        <<narration "She was ready to choose one and see the rest turning off.">>
+        <<media_scene 'lights_off' '20' '20'>>
+
+        <<narration "In the end, her options were:">>
+        
+        <<speechLink "The one where she took Grace away from Brock, her childhood neighboor" "branch_bw_ending_1">>
+        <<speechLink "The one where she met a wonderfull readhead girl" "branch_bw_ending_2">>
+        <<speechLink "The one where she is a harem queen" "branch_bw_ending_3">>
+        <<speechLink "The initial world she came from" "branch_bw_ending_4">>
+    `,
+
+    'branch_bw_ending_1': `
+        <h1 class="ending-title"> Ending 10 </h1>
+
+        <<narration "This was the world where Brock wasn't $player.name's brother but the boy next door - a childhood friend who had grown close to Grace over the years.
+            The thread brought $player.name back to her parents' house, on a quiet evening much like the one where everything had once begun.
+            Everything around her felt both strange and familiar at the same time.">>  
+        <<narration "$player.name carried out her plan here: stepping into the role of the one who takes.
+            She asked Grace to come with her, to leave her old life behind, to belong to her.<br>
+            Grace hesitated at first, torn between guilt and curiosity, but after a long pause she quietly agreed.">>  
+        <<narration "He tried to talk to Grace, then to $player.name, pleading and arguing, but nothing changed their minds.
+            After a few days of desperate visits and heated words, he disappeared.
+            When he returned a month later, he looked exhausted, unshaven, half-drunk and with eyes red with tears.">>  
+        <<media_scene "guy_broken" '30' '22'>>
+
+        <<dialog "brock" "Please, don't shut me out.">>  
+        <<narration "$player.name didn't answer right away, watching his pathetic state. <br> 
+            She cathed up he was already broken down enough for anything.">>  
+        <<dialog "brock" "I have nothing left. Let me at least stay close. I'll prove myself, I'll do anything... just leave me a place in this world.">>  
+        <<narration "$player.name was suprised for a moment, but then a new idea had born in her mind. <br>
+            She decided to make a use of him and laid out strict rules for him to follow.">> 
+        <<dialog "jean" "You will listen to all you're told. You keep some distance physically. You do not touch me or Grace unless I say so. 
+            You speak when spoken to. You help when asked. You will not be with us intimately, you can only watch. That is all.">>  
+        <<narration "She voiced it like a contract, steady and clear.">>  
+        <<narration "Brock agreed immediately, almost too quickly, and she understood that from now on he would accept whatever she can prepare for him.">>  
+        
+        <<narration_comment "...">>
+
+        <<narration "Not long after, the three of them moved to a small place across town, a quiet area away from curious eyes.">>
+        <<media_scene "downtown" '32' '22'>>
+
+        <<narration "Grace and $player.name shared a bedroom, while Brock slept in the den. <br>
+            He cooked, fixed things, ran errands and stayed silent unless invited to talk.">>  
+        <<narration "Over time he became part of the house without ever being part of them.
+            He obeyed the rules, never asked for more and carried himself silently.">>  
+        <<narration "Even in intimate moments...">>
+        <<media_scene "brock_watch" '18' '26'>>
+
+        <<narration "Grace questioned it at first. <br>
+            She argued that the arrangement was too strange, but wih time she admitted it was pretty comfortable and better way then to just abandon him.">>  
+        <<narration "$player.name kept her rules strict and maintained for others to follow. <br>
+            Brock accepted it all and seemed almost relieved to have his place set.">>  
+        <<narration "And with time he was grant permission to talk during couple's passion time.">> 
+        <<media_scene "brock_watch_talk" '31' '18' 'video'>>
+
+        <<narration "...and even masturbate while watching.">> 
+        <<media_scene "brock_watch_mastr" '36' '16'>>
+
+        <<narration "But that was a limit of what he was permitted.">>
+
+        <<narration_comment "...">>
+
+        <<narration "From the outside they looked like two women living together while a neighbor helped with housework. <br>
+            But inside, it was a bizzare balance $player.name created in this household.">>  
+        <<narration "At night, when she sat by the window, $player.name sometimes thought about the glowing threads she had once held in her hands. 
+            The paths she didn't choose, the worlds she left behind.">>  
+        <<narration "Yet she was sure, this was the one.">>  
+
+        <h1 class="the-end-sign"> THE END </h1>
+    `, 
+    
+    'branch_bw_ending_2': `
+        <h1 class="ending-title"> Ending 11 </h1>
+
+        <<narration "The world she stopped at was simple and quiet one.">>
+        <<narration "There, $player.name met one red-haired girl - a barista in a small street café that always smelled of roasted beans and sunlight.">>
+        <<narration "She wasn't anyone special, at least not to the rest of the world.  <br>
+            Just a young woman in an apron, smiling softly while serving coffee. <br>
+            But to $player.name, every little detail about her felt... magnetic. <br>
+            The way her hair caught the light, like the sunset had chosen to rest on her shoulders. <br>
+            The way her voice lingered gently after every word.">>
+        <<narration "Across all the dimensions she'd seen, $player.name learned that some faces repeat. 
+            The same souls, maybe, wearing slightly different lives. <br>
+            Sometimes they're unrecognizable - hardened, broken, cruel. 
+            Other times, they're almost the same, as if fate was trying again with minor edits.">>
+        <<narration "Maybe this girl existed in her first world too, perhaps behind a counter somewhere, serving coffee to strangers who never looked up long enough to notice her. <br>
+            Maybe $player.name herself had crossed paths with her once, too busy to see what was right there.">>
+        <<narration "It's frightening, $player.name thought, how easy it is to miss the things that could become dearest to you - 
+            the people meant to shift your entire world - all because you were looking somewhere else.">>
+        <<narration "But now, after everything, she was paying attention.">>
+        <<narration_comment "...">>
+
+        <<narration "They started talking, about small non-important things at first. <br>
+            The weather, the taste of the beans, the quiet of the mornings before customers came in. <br>
+            The girl's laughter became something $player.name waited for each day. <br>
+            Her name, Julia, stuck in $player.name's mind like a secret melody.">>
+
+        <<narration "And soon after she couldn't take it anymore.">>
+        <<media_scene "jean_julia_bw_kiss" '30' '20'>>
+
+        <<narration "Julia quickly reciprocated as she was waiting for it.">>
+        <<media_scene "jean_julia_bw_kiss_2" '24' '22'>>
+
+        <<narration "Neither of them made a big confession. It just... happened.">>
+
+        <<narration "Their closeness grew fast ...in all meanings.">>
+        <<media_scene "jean_julia_bw_sex" '32' '20'>>
+        <<media_scene "jean_julia_bw_sex_2" '32' '20'>>
+
+        <<narration "It felt inevitable, like the world itself was finally aligning after being fractured for so long.">>
+        <<media_scene "jean_julia_bw_sex_3" '32' '20'>>
+
+        <<narration "$player.name didn't tell Julia about the worlds she'd seen. She didn't need that anymore. 
+        For the first time in a long while, she didn't want to change anything at all, didn't need to search for another version.">>
+
+        <<narration "Here, in this simple life with a girl who smelled of coffee and warmth, $player.name finally felt something close to peace.">>
+        <<media_scene "jean_julia_bw_kiss_end" '24' '26'>>
+        
+        <h1 class="the-end-sign"> THE END </h1>
+    `, 
+
+    
+    'branch_bw_ending_3': `
+        <h1 class="ending-title"> Ending 12 </h1>
+
+        <<narration "$player.name chose the path of indulgence.">>
+        <<narration "Out of all the worlds she had visited, one called to her the most - a dimension built on old power wrapped in new glamour.">>
+        <<media_scene "neo_royal_palace" '22' '22'>>
+
+        <<narration "Neo-royal palaces stood over neon-lit cities, and her bloodline was the key to it all.">>
+
+        <<narration "In this world, $player.name was not just respected, she was adored. <br>
+            Wealth, beauty, and influence surrounded her. <br>
+            She learned how easily people bent their morals when dazzled by a crown and a smile.">>
+
+        <<narration "Having it all - power, influence, money and all that can be bought with it, $player.name embraced a life of grand celebration and drowned into pleasure.">>
+        <<media_scene "closed_elite_orgy" '32' '20'>>
+
+        <<narration "After visiting countless gatherings of the elite, she decided to established her own center of pleasures - a harem of most loyal and beautiful woman.">>
+        <<media_scene "harem_intro" '32' '18'>>
+
+        <<narration "And when she was not busy with keeping her status and power, she indulged in all kind of activities with them.">>
+        <<narration "Training them...">>
+        <<media_scene "harem_train" '32' '18'>>
+        <<narration "...doing funny games...">>
+        <<media_scene "harem_guess" '36' '20' 'video'>>
+        <<narration "...or, most often, just letting them service her.">>
+        <<media_scene "harem_service" '32' '18'>>
+        <<media_scene "harem_service_2" '33' '18' 'video'>>
+
+        <<narration "Her life became a constant mix of pleasure, debauchery and adoration of her - and she loved every moment of it.">>
+        <<media_scene "harem_adore" '32' '18'>>
+
+        <h1 class="the-end-sign"> THE END </h1>
+    `,
+
+    'branch_bw_ending_4': `
+        <h1 class="ending-title"> Ending 13 </h1>
+
+        <<narration "$player.name opened her eyes back in her own bed.">>
+        <<narration "It was the very next day after she had disappeared, but now she carried memories of a hundred lives. <br>
+            The glowing strings that once guided her through worlds were fading now, leaving her alone with her choices.">>
+        <<narration "She decided to begin with the people she once knew.">>
+
+        <<narration "She started by visiting her parents. <br>
+            They were surprised to see her, even more when she spoke calmly and determined.">>
+        <<narration "The conversations ended with her revealing her true feelings, as she told them they should've done better as the parent.">>
+        <<media_scene "parents" '24' '18'>>
+
+        <<narration_comment "...">>
+
+        <<narration "Next came Brock.">>    
+        <<narration "When she visited him, he expected a fight, but $player.name only gave a faint smile.">>
+        <<narration "The conversation was short and ended with the following words.">>
+        <<dialog 'jean' "You should stop looking up to me. Take your time and think about your own life, your own future. ">>
+        <<dialog 'jean' "And one last thing... we probably won't see each other again, don't try to reach me.">>
+        <<media_scene "brock_astonished" '20' '20'>>
+
+        <<narration "He didn't believe those words at first.">>
+        <<narration "Years later, he did try to reach out to her, but she never contacted him back.">>
+
+        <<narration_comment "...">>
+        <<narration "The next thing to change was her job.">>   
+        <<narration "$player.name left it in favor of exploring new ideas in a new country. <br>
+            A small hobby she picked up during her travels grew into a project, then a business and her own company.">>
+        <<media_scene "jean_successful" '22' '22'>>
+
+        <<narration_comment "...">>
+        <<narration "Before she left her old life for good, there was one more goodbye.">>
+        <<narration "$player.name met Grace for the last time. ">>
+        <<narration "She wanted to say a lot ...or maybe nothing at all. In the end, her final words were simple:">>
+        <<dialog 'jean' "Thank you... and goodbye.">>
+        <<media_scene "grace_cry" '20' '20'>>
+
+        <<narration "Grace didn't handle it well. She cried and begged, but $player.name only nodded and walked away.">>
+
+        <<narration_comment "...">>
+        <<narration "Two years later, after travelling a lot, Grace found her again. <br>
+            And after many attempts, $player.name finally took pity and agreed on terms to have a 'very open relationship'.">>
+        <<narration "Since that time Grace was completely and uterly loyal to $player.name.">>
+        <<media_scene "grace_worship_leg" '38' '18' 'video'>>
+
+        <<narration "...while $player.name was free to choose her future roads and relationships with other people.">>
+        <<media_scene "grace_cuckqueen" '32' '18'>>
+        <<media_scene "grace_cuckqueen_2" '32' '18'>>
+
+        <<narration_comment "...">>
+        <<narration "Sometimes her thoughts returned to that strange experience, 
+            and as the years passed, she wasn't entirely sure anymore whether it had really happened.">>
+        <<narration "But she made up her mind to live <i>her own</i> life 
+            and treat that unreal journey as a lesson, like the one from the winter story, 'A Christmas Carol.'">>
+        <<narration "Life wasn't a dream and new problems still appeared along the road. 
+            But now, with the experience of hundreds of lives, she knew there was always a way.">>
+        <<media_scene "jean_wink_at_viewer" '20' '20'>>
+
+        <h1 class="the-end-sign"> THE END </h1>
+    `,
+
+
+    //#endregion
 }
 
 
-/* twine-user-script #5: "speech_link.js" */
+/* twine-user-script #4: "speech_link.js" */
 // speechLink macro
 Macro.add("speechLink", {
   handler() {
@@ -1939,7 +2701,6 @@ Macro.add("speechLink", {
     const isPhrase    = args[3] === "phrase";
     const charId      = args[4];
 
-    // --- Disabled variant ---
     if (isDisabled) {
       const html =
         '<div class="speechLink speechLink--disabled">' +
@@ -1951,7 +2712,6 @@ Macro.add("speechLink", {
       return $(this.output).wiki(html);
     }
 
-    // --- Validation ---
     if (!linkTextRaw || !sceneId) {
       return this.error("speechLink: 'link_text' and 'scene_id_name' are required.");
     }
@@ -1959,7 +2719,6 @@ Macro.add("speechLink", {
       return this.error("speechLink: 'character_id' must be a string if provided.");
     }
 
-    // --- Portrait & display text ---
     const displayText = isPhrase ? "'" + linkTextRaw + "'" : linkTextRaw;
     const pm          = State.variables.settings?.portrait_mode;
     const folder      = pm === 1 ? "1" : pm === 2 ? "2" : "0";
@@ -1969,7 +2728,6 @@ Macro.add("speechLink", {
       characterName = rec?.name || charId;
     }
 
-    // --- Label configuration ---
     const LABELS = {
       ending: { text: "Ending",                   size: "short"  },
       gun:    { text: "'Gun' Branch [Tragedy]",     size: "large"  },
@@ -1979,10 +2737,8 @@ Macro.add("speechLink", {
     };
     const labelInfo = LABELS[labelType] || { text: "", size: "normal" };
 
-    // --- Build HTML ---
     let html = `<div class="speechLink${isPhrase ? " speechLink--phrase" : ""}">`;
 
-    // Portrait
     if (isPhrase && charId) {
       html +=
         `<img class="speechLink__portrait" ` +
@@ -1990,10 +2746,8 @@ Macro.add("speechLink", {
               `data-name="${characterName}" alt="" />`;
     }
 
-    // Bubble
     html += '<div class="speechLink__bubble">';
 
-    // Label
     if (labelInfo.text) {
       html +=
         `<span class="speechLink__label speechLink__label--${labelInfo.size}">` +
@@ -2001,20 +2755,18 @@ Macro.add("speechLink", {
         `</span>`;
     }
 
-    // Link + scene setter
     html +=
       `<<link "${displayText}" "Passage_holder">>` +
         `<span class="speechLink__anchor">${displayText}</span>` +
         `<<set $temp.cur_scene = "${sceneId}">>` +
       `<</link>>`;
 
-    // Close
     html += `</div></div>`;
 
     $(this.output).wiki(html);
   }
 });
-/* twine-user-script #6: "widget_media_scene.js" */
+/* twine-user-script #5: "widget_media_scene.js" */
 // Define the widget
 Macro.add('media_scene', {
   handler() {
@@ -2083,26 +2835,6 @@ if (typeof State.variables.settings === 'undefined') {
 }
 
 
-// $(document).on(':passagedisplay', function () {
-//   $('.media_scene-img, .media_scene-video').each(function () {
-//     const el = this;
-
-//     // get the values straight from the inline style
-//     const styleWidth = parseFloat(el.style.width);
-//     const styleHeight = parseFloat(el.style.height);
-
-//     if (styleWidth && styleHeight) {
-//       const ratio = styleWidth / styleHeight;
-//       const newHeight = parseFloat(el.clientWidth / ratio);
-//       setTimeout(() => {
-// console.log(ratio, newHeight, el.getBoundingClientRect())
-// }, 1000);
-      
-//     //   el.style.height = newHeight + 'px';
-//     }
-//   });
-// });
-
 $(document).on(':passagedisplay', function () {
   $('.media_scene-img, .media_scene-video').each(function () {
     const el = this;
@@ -2139,8 +2871,7 @@ $(document).on(':passagedisplay', function () {
 });
 </script><tw-tag name="System" color="red"></tw-tag><tw-passagedata pid="1" name="Disclaimer" tags="System nobr" position="625,250" size="100,100">&lt;&lt;print setup.getScene(&#39;Disclaimer&#39;)&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Menu_Info" tags="System nobr nohistory" position="649,250" size="100,100">&lt;&lt;print setup.getScene(&#39;info&#39;)&gt;&gt;
 
-
-&lt;&lt;br 4&gt;&gt;
+&lt;&lt;br 2&gt;&gt;
 &lt;div class=&quot;link-system&quot;&gt;
 [[Return back|$temp.previous]]
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Menu_Settings" tags="System nobr nohistory" position="647,250" size="100,100">&lt;h2&gt;&lt;i&gt;Settings Menu &lt;/i&gt;&lt;/h2&gt;
@@ -2158,6 +2889,10 @@ Portrait style:
 &lt;&lt;br 2&gt;&gt;
 
 &lt;&lt;run setup.drawPreviewPortrait(&#39;grace&#39;)&gt;&gt;
+
+
+/* &lt;&lt;toggle &#39;Show portraits in choices&#39; &#39;$settings.link_portrait&#39; $settings.link_portrait&gt;&gt;   */
+
 
 
 &lt;&lt;br 2&gt;&gt;
